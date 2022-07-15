@@ -4,8 +4,9 @@
 /client/node_modules
 /server/node_modules
 /node_modules
-/package.json
-/package-lock.json
+/client/build
+/server/public
+
 /.pnp
 .pnp.js
 
