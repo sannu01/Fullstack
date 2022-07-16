@@ -25,6 +25,7 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
       const rocket = data.get("rocket-name");
       const target = data.get("planets-selector");
       // eslint-disable-next-line
+      setPendingLaunch(true);
       const response = await httpSubmitLaunch({
         launchDate,
         mission,
@@ -33,7 +34,7 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
       });
 
       // TODO: Set success based on response.
-      const success = false;
+      const success = response.ok;
       if (success) {
         getLaunches();
         setTimeout(() => {
@@ -53,7 +54,7 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
       const response = await httpAbortLaunch(id);
 
       // TODO: Set success based on response.
-      const success = false;
+      const success = response.ok;
       if (success) {
         getLaunches();
         onAbortSound();
