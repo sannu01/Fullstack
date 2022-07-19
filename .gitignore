@@ -6,6 +6,7 @@
 /node_modules
 /client/build
 /server/public
+/flowchart.drawio
 
 /.pnp
 .pnp.js
