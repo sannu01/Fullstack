@@ -1,12 +1,12 @@
 const {
   getAllLaunchesData,
-  addNewLaunchData,
+  scheduleNewLaunch,
   existLaunchId,
   deleteLaunchData,
 } = require("../../model/launches.model");
 
-function getAllLaunches(req, res) {
-  res.status(200).json(getAllLaunchesData());
+async function getAllLaunches(req, res) {
+  res.status(200).json(await getAllLaunchesData());
 }
 
 function addNewLaunch(req, res) {
@@ -27,21 +27,30 @@ function addNewLaunch(req, res) {
       error: "Invalid launch date",
     });
   }
-  addNewLaunchData(launch);
+  scheduleNewLaunch(launch);
 
   return res.status(201).json(launch);
 }
 
-function deleteLaunch(req, res) {
+async function deleteLaunch(req, res) {
   const launchId = Number(req.params.id);
-  if (!existLaunchId(launchId)) {
+  const existLaunch = await existLaunchId(launchId);
+  if (!existLaunch) {
     return res.status(404).json({
       error: "Launch not Found",
     });
   }
 
-  const aborted = deleteLaunchData(launchId);
-  return res.status(200).json(aborted);
+  const aborted = await deleteLaunchData(launchId);
+
+  if (!aborted) {
+    return res.status(400).json({
+      error: "launch not aborted",
+    });
+  }
+  return res.status(200).json({
+    ok: true,
+  });
 }
 module.exports = {
   getAllLaunches,
