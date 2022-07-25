@@ -7,7 +7,8 @@
 /client/build
 /server/public
 /flowchart.drawio
-/server/src/services/constants.js
+/server/.env
+
 
 
 /.pnp

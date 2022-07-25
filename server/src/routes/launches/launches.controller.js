@@ -5,8 +5,12 @@ const {
   deleteLaunchData,
 } = require("../../model/launches.model");
 
+const { getPagination } = require("../../services/query");
+
 async function getAllLaunches(req, res) {
-  res.status(200).json(await getAllLaunchesData());
+  const { skip, limit } = getPagination(req.query);
+  const launches = await getAllLaunchesData(skip, limit);
+  return res.status(200).json(launches);
 }
 
 function addNewLaunch(req, res) {
